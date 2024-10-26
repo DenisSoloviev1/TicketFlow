@@ -115,7 +115,6 @@ legend {
 }
 
 body {
-  font-family: "Golos Text", sans-serif;
   font-weight: 400;
   min-width: 320px;
   width: 100vw;
@@ -132,7 +131,13 @@ body {
     :where(.css-dev-only-do-not-override-ni1kz0).ant-app {
       width: 100%;
     }
+    :where(.css-dev-only-do-not-override-ni1kz0).ant-layout .ant-layout-header,
+    :where(.css-dev-only-do-not-override-ni1kz0).ant-layout.ant-layout-footer {
+      display: flex;
+      justify-content: center;
+    }
     .wrapper {
+      width: 100%;
       max-width: 1320px;
       padding: 0 10px;
       display: flex;

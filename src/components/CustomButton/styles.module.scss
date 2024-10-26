@@ -6,9 +6,9 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  border-radius: 16px;
+  border-radius: 30px;
   transition: all 0.3s ease-in-out;
-  // display: none;
+  font-weight: 500;
 
   svg {
     width: auto;
@@ -31,13 +31,12 @@
 
 .blue {
   color: $color-background;
-  border: 2px solid $color-action;
   background-color: $color-action;
-  padding: 10px 20px;
+  padding: 20px 30px;
+  font-size: 20px;
 }
 .blue:hover {
-  background-color: inherit;
-  color: $color-action;
+  background-color: #3d8af7;
 }
 
 //классы для кнопки закрытия

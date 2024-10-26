@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import httpService from "../services/http.service";
 
 import { Route, Routes } from "react-router-dom";
-import WelcomePage from "../pages/WelcomePage";
+import { WelcomePage } from "../pages/WalcomePage";
 import SecuredPage from "../pages/SecuredPage";
 import PrivateRoute from "./helpers/PrivateRoute";
 import { useKeycloak } from "@react-keycloak/web";
