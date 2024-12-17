@@ -23,5 +23,4 @@ export const Container = styled.div<{
     }
     return `${props.$padding || 20}px`;
   }};
-  transition: all 0.3s ease-in-out;
 `;

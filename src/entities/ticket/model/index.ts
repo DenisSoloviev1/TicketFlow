@@ -1,15 +1,13 @@
 export interface ITicket {
-  id: string;
-  cost: string;
-  from: {
-    time: string;
-    city: string;
-    date: string;
-  };
-  to: {
-    time: string;
-    city: string;
-    date: string;
-  };
-  transfer: number | null;
+  origin: string;
+  origin_name: string;
+  destination: string;
+  destination_name: string;
+  departure_date: string;
+  departure_time: string;
+  arrival_date: string;
+  arrival_time:string;
+  carrier: string;
+  stops: number | null;
+  price: number;
 }
