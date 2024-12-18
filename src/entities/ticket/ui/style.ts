@@ -8,8 +8,8 @@ export const Head = styled.div`
   justify-content: center;
   align-items: center;
   gap: 20px;
-  border-right: 2px solid var(--color-font-disable);
-  padding-right: 20px;
+  border-right: 1px solid var(--color-font-disable);
+  padding: 20px;
 
   img{
    width: 80%;}
@@ -20,6 +20,8 @@ export const Time = styled.span`
   line-height: 30px;
   white-space: nowrap;
   color: var(--color-font);
+    padding: 0 20px;
+
 `;
 
 export const City = styled.span`
@@ -27,6 +29,8 @@ export const City = styled.span`
   line-height: 17px;
   white-space: nowrap;
   color: var(--color-font);
+      padding: 0 20px;
+
 `;
 
 export const Date = styled.span`
@@ -34,6 +38,8 @@ export const Date = styled.span`
   line-height: 17px;
   white-space: nowrap;
   color: var(--color-font-disable);
+      padding: 0 20px;
+
 `;
 
 export const Stops = styled.span`
@@ -44,7 +50,7 @@ export const Stops = styled.span`
 `;
 
 export const Line = styled.div`
-  width: 80%;
+  width: 90%;
   height: 2px;
   border-radius: 5px;
   background-color: var(--color-font-disable);

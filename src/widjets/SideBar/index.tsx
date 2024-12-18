@@ -1,35 +1,59 @@
 import React, { useState } from "react";
-import { ButtonContainer, CurrencyButton, CheckboxContainer, Checkbox } from "./style";
+import {
+  ButtonContainer,
+  CurrencyButton,
+  CheckboxContainer,
+  Checkbox,
+} from "./style";
 import { Container, Flex } from "../../shared/ui";
 import { PlainTitle } from "../../shared/ui/PlainTitle";
-
-const currencies = ["RUB", "USD", "EUR"];
+import { Currency, currencies, useTicketStore } from "../../entities/ticket";
 
 const stops = [
-  { label: "Все", id: "all", checked: false },
-  { label: "Без пересадок", id: "noStops", checked: false },
-  { label: "1 пересадка", id: "oneStop", checked: false },
-  { label: "2 пересадки", id: "twoStops", checked: false },
-  { label: "3 пересадки", id: "threeStops", checked: false },
+  { label: "Все", id: "all", checked: true }, // По умолчанию "Все" включено
+  { label: "Без пересадок", id: "0", checked: false },
+  { label: "1 пересадка", id: "1", checked: false },
+  { label: "2 пересадки", id: "2", checked: false },
+  { label: "3 пересадки", id: "3", checked: false },
 ];
 
-const SideBar: React.FC = () => {
-  const [activeCurrency, setActiveCurrency] = useState<string>("RUB");
+interface SideBarProps {
+  onFilterChange: (selectedStops: (number | null)[]) => void; // Использование типа number | null
+}
+
+const SideBar: React.FC<SideBarProps> = ({ onFilterChange }) => {
+  const { activeCurrency, setActiveCurrency } = useTicketStore();
   const [selectedStops, setSelectedStops] = useState(stops);
 
   // Обработчик смены валюты
-  const handleCurrencyClick = (currency: string) => {
+  const handleCurrencyClick = (currency: Currency) => {
     setActiveCurrency(currency);
   };
 
   // Обработчик для чекбоксов
   const handleCheckboxChange = (id: string) => {
-    setSelectedStops((prevStops) =>
-      prevStops.map((stop) =>
-        stop.id === id ? { ...stop, checked: !stop.checked } : stop
-      )
-    );
+    const updatedStops = selectedStops.map((stop) => {
+      if (stop.id === "all") {
+        return stop.id === id ? { ...stop, checked: true } : { ...stop, checked: false };
+      }
+      return stop.id === id
+        ? { ...stop, checked: !stop.checked }
+        : { ...stop, checked: stop.checked && id !== "all" };
+    });
+
+    setSelectedStops(updatedStops);
+
+    // Собираем ID всех выбранных пересадок
+    const selectedIds = updatedStops
+      .filter((stop) => stop.checked)
+      .map((stop) => stop.id);
+
+    // Если выбрано "Все", передаём пустой массив (для отображения всех билетов)
+    onFilterChange(selectedIds.includes("all") ? [] : selectedIds.map(Number));
   };
+
+  const currencyKeys = Object.keys(currencies) as Currency[];
+
   return (
     <Container $width={"25%"} $padding={[20, 0]}>
       <Flex $width={"100%"} $gap={20}>
@@ -37,7 +61,7 @@ const SideBar: React.FC = () => {
           <PlainTitle>валюта</PlainTitle>
 
           <ButtonContainer>
-            {currencies.map((currency) => (
+            {currencyKeys.map((currency) => (
               <CurrencyButton
                 key={currency}
                 onClick={() => handleCurrencyClick(currency)}
@@ -49,7 +73,7 @@ const SideBar: React.FC = () => {
           </ButtonContainer>
         </Flex>
 
-        <Flex $width={"100%"} >
+        <Flex $width={"100%"}>
           <PlainTitle>количество пересадок</PlainTitle>
 
           <CheckboxContainer>

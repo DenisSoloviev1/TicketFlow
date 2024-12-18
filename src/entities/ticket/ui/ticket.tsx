@@ -1,46 +1,51 @@
 import React from "react";
-import { ITicket } from "../model";
+import { ITicket, useTicketStore, Currency, currencies, exchangeRates, carriers } from "../model";
 import { Container, CustomButton, Flex } from "../../../shared/ui";
 import { Head, Time, City, Date, Stops, Line } from "./style";
 import { PlaneSvg } from "../../../shared/ui/icon";
 
 export const Ticket: React.FC<ITicket> = ({ ...props }) => {
   // // Функция для форматирования даты
-  //   const formatDate = (date: string): string => { 
-  //   const [day, month, year] = date.split("."); 
-   
-  //   // Создание строки в формате ISO и передача в Date 
-  //   const isoString = `20${year}-${month}-${day}`; 
-  //   const dateObj = new Date(isoString); 
-   
-  //   return new Intl.DateTimeFormat("ru-RU", { 
-  //     day: "numeric", 
-  //     month: "short", 
-  //     year: "numeric", 
-  //     weekday: "short", 
-  //   }).format(dateObj); 
+  //   const formatDate = (date: string): string => {
+  //   const [day, month, year] = date.split(".");
+
+  //   // Создание строки в формате ISO и передача в Date
+  //   const isoString = `20${year}-${month}-${day}`;
+  //   const dateObj = new Date(isoString);
+
+  //   return new Intl.DateTimeFormat("ru-RU", {
+  //     day: "numeric",
+  //     month: "short",
+  //     year: "numeric",
+  //     weekday: "short",
+  //   }).format(dateObj);
   // };
-  
+
+  const { activeCurrency } = useTicketStore();
 
   // Функция для форматирования цены
-  const formatPrice = (price: number) => {
-    return price.toLocaleString("ru-RU");
+  const formatPrice = (price: number, currency: Currency) => {
+    const convertedPrice = price * exchangeRates[currency];
+    return `${convertedPrice.toLocaleString("ru-RU", {
+      minimumFractionDigits: 2,
+    })} ${currencies[currency]}`;
   };
 
+  const carrier = carriers.find((e) => e.name === props.carrier);
+
   return (
-    <Container $width={"100%"}>
+    <Container $width={"100%"} $padding={[0]}>
       <Head>
-        {/* <img src="/TurkishAirlines.png" alt="logo" /> */}
-        {props.carrier}
+      {carrier && <img src={carrier.image} alt={`logo ${props.carrier}`} />}
 
         <CustomButton $style={"orange"} $width={"100%"}>
           Купить
           <br />
-          за {formatPrice(props.price)}₽
+          за {formatPrice(props.price, activeCurrency)}
         </CustomButton>
       </Head>
 
-      <Flex $width={"70%"} $direction={"row"} $justify={"space-around"}>
+      <Flex $width={"70%"} $direction={"row"}>
         <Flex $align={"flex-start"}>
           <Time>{props.departure_time}</Time>
           <City>

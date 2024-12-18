@@ -3,7 +3,7 @@ import "../../variables.scss";
 
 export const Skeleton = styled.div<{ $width?: string; $height?: string }>`
   background-color: var(--color-background-container); /* Цвет скелетона */
-  border-radius: 16px; 
+  border-radius: 8px; 
   width: ${({ $width }) => $width || "100%"};
   height: ${({ $height }) => $height || "40px"};
   animation: shimmer 2s infinite linear;

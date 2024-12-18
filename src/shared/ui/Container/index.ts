@@ -8,7 +8,6 @@ export const Container = styled.div<{
   $padding?: number | number[];
 }>`
   width: ${(props) => props.$width};
-  max-width: 700px;
   height: fit-content;
   display: flex;
   align-items: center;
@@ -23,4 +22,5 @@ export const Container = styled.div<{
     }
     return `${props.$padding || 20}px`;
   }};
+  box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.3);
 `;

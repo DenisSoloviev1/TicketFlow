@@ -7,5 +7,6 @@ export const Wrapper = styled.div`
   width: 100%;
   min-width: 320px;
   max-width: 1340px;
+  min-height: 100vh;
   background-color: var(--color-background);
 `;
